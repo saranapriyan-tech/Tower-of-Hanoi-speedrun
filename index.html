@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower of Hanoi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Tower of Hanoi</h1>
+
+    <div id="game">
+
+    <div id="dashboard">
+        <div id="left-dash">
+            <div id="topRow">
+                <div id="name">
+                <input id="username" maxlength="20" pattern="[A-Za-z0-9 _\-]{3,20}" autocomplete="off" spellcheck="false"  ></input>
+
+                <span id="usernameGuidelines">
+                    <summary>Username Guidelines</summary>
+                    <ul>
+                        <li>name must be 3–20 characters long</li>
+                        <li>Letters, numbers, spaces, hyphens (-) and underscores (_) only allowed</li>
+                        <li>No HTML tags, scripts, or special characters (e.g. &lt; &gt; { } ; = /) allowed</li>
+                    </ul>
+                </span>
+                </div>
+            </div>
+        </div>
+
+        <div id="right-dash">
+
+            <div id="ringCategoryCounter">
+                <label for="ringCategory">Ring category:</label>
+                <span id="ringCategory">--</span>
+            </div>
+            
+            <div id="controls">
+            
+                <div id="slider-container">
+                <label for="diskCount">Number of Disks:    </label>
+                <input type="range" id="diskCount" min="3" max="12" value="5">  
+                <span id="diskValue">5</span>        
+                </div>
+
+                <div id = "add-button">
+                <button id="add">Add disks / Reset</button>
+                <button id="undo">Undo</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="details">
+
+        <div id="timers">
+                <div id="timerCounter">
+                    <label for="timer">Timer:</label>
+                    <span id="timer">00:00:00:00</span>
+                </div>
+
+                <div id="dateTimeCounter">
+                    <label for="dateTime">Date:</label>
+                    <span id="dateTime">--</span>
+                </div>
+
+        </div>
+
+        <div id="stats">
+                <div id="moveCounter">
+                    <label for="moveCount">Number of moves:</label>
+                    <span id="moveCount">0</span>
+                </div>
+
+                <div id="minimumCounter">
+                    <label for="minimumCount">Minimum moves:</label>
+                    <span id="minimumCount">0</span>
+                </div>
+
+        </div> 
+
+    </div>
+
+    <div id="board">
+
+        <div id="towers">
+            
+            <div class="tower" id="tower1">
+                <div id="heldDiskArea1"></div>
+                <div class="rod"></div>
+                <div class="disks"></div>
+            </div>
+
+            
+            <div class="tower" id="tower2">
+                <div id="heldDiskArea2"></div>
+                <div class="rod"></div>
+                <div class="disks"></div>
+            </div>
+
+            
+            <div class="tower" id="tower3">
+                <div id="heldDiskArea3"></div>
+                <div class="rod"></div>
+                <div class="disks"></div>
+            </div>
+            
+           
+
+        </div>
+
+    </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
