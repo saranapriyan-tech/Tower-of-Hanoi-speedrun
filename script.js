@@ -265,7 +265,7 @@ function checkWin() {
 
 async function submitScore(username, diskCount, timeTaken, moveCount) {
     try {
-        const response = await fetch("http://localhost:5000/api/scores", {
+        const response = await fetch("https://tower-of-hanoi-ss9n.onrender.com/api/scores", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, diskCount, timeTaken, moveCount })
