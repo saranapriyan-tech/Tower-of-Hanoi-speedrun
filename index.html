@@ -13,6 +13,32 @@
 
     <div id="game">
 
+    <div id="leaderboard">
+    <h2>Leaderboard</h2>
+    <div id="categoryTabs">
+        <button class="catTab active" data-category="novice">Novice</button>
+        <button class="catTab" data-category="apprentice">Apprentice</button>
+        <button class="catTab" data-category="skilled">Skilled</button>
+        <button class="catTab" data-category="expert">Expert</button>
+        <button class="catTab" data-category="master">Master</button>
+    </div>
+    
+    <table id="leaderboardTable">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Disks</th>
+                <th>Time</th>
+                <th>Moves</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+        </tbody>
+    </table>
+    </div>
+
+
     <div id="dashboard">
         <div id="left-dash">
             <div id="topRow">
@@ -83,32 +109,6 @@
                 </div>
 
         </div> 
-
-        <div id="leaderboard">
-    <h2>Leaderboard</h2>
-    <div id="categoryTabs">
-        <button class="catTab active" data-category="novice">Novice</button>
-        <button class="catTab" data-category="apprentice">Apprentice</button>
-        <button class="catTab" data-category="skilled">Skilled</button>
-        <button class="catTab" data-category="expert">Expert</button>
-        <button class="catTab" data-category="master">Master</button>
-    </div>
-    
-    <table id="leaderboardTable">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Player</th>
-                <th>Disks</th>
-                <th>Time</th>
-                <th>Moves</th>
-            </tr>
-        </thead>
-        <tbody id="leaderboardBody">
-        </tbody>
-    </table>
-    </div>
-
     </div>
 
     <div id="board">
@@ -140,6 +140,14 @@
         </div>
 
     </div>
+    </div>
+
+    <div id="winOverlay">
+        <div id="winCard">
+        <h2>🎉 You Win!</h2>
+        <p id="winStats"></p>
+        <button id="closeWin">Play Again</button>
+        </div>
     </div>
 
     <script src="script.js"></script>

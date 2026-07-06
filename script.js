@@ -252,20 +252,36 @@ function undoMove() {
 function checkWin() {
     if (towers[2].length === diskCount) {
         stopTimer();
-        alert("🎉 You Win!");
 
         let username = usernameInput.value.trim();
+        let finalTime = elapsedTime;
+        let finalMoves = moveCount;
+
+        showWinOverlay(finalTime, finalMoves);
+
         if (username.length >= 3) {
-            submitScore(username, diskCount, elapsedTime, moveCount);
+            submitScore(username, diskCount, finalTime, finalMoves);
         } else {
             console.log("No valid username entered, score not submitted.");
         }
     }
 }
 
+function showWinOverlay(finalTime, finalMoves) {
+    let overlay = document.getElementById("winOverlay");
+    let statsEl = document.getElementById("winStats");
+
+    statsEl.textContent = `Time: ${formatTime(finalTime)}  |  Moves: ${finalMoves}`;
+    overlay.classList.add("show");
+}
+
+document.getElementById("closeWin").addEventListener("click", function () {
+    document.getElementById("winOverlay").classList.remove("show");
+});
+
 async function submitScore(username, diskCount, timeTaken, moveCount) {
     try {
-        const response = await fetch("https://tower-of-hanoi-ss9n.onrender.com/api/scores", {
+        const response = await fetch(`${BACKEND_URL}/api/scores`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, diskCount, timeTaken, moveCount })
@@ -279,6 +295,8 @@ async function submitScore(username, diskCount, timeTaken, moveCount) {
 
         const data = await response.json();
         console.log("Score saved:", data);
+
+        fetchLeaderboard(getActiveCategory());
     } catch (err) {
         console.log("Network error saving score:", err);
     }
@@ -344,6 +362,11 @@ catTabs.forEach(tab => {
         fetchLeaderboard(this.dataset.category);
     });
 });
+
+function getActiveCategory() {
+    let activeTab = document.querySelector(".catTab.active");
+    return activeTab ? activeTab.dataset.category : "novice";
+}
 
 for (let i = 0; i < 3; i++) {
     document.getElementById(`tower${i + 1}`).addEventListener("click", function () {
