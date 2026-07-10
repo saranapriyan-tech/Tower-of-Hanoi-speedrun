@@ -1,0 +1,228 @@
+#game {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    padding: 40px 50px;
+    border-radius: 16px;
+    background-color: var(--bg-panel-dark);
+    justify-content: center;
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 96vw;
+    box-shadow: 0 0 0 4px #000;
+    transition: filter 0.4s ease;
+}
+
+#game.blurred {
+    filter: blur(6px);
+    pointer-events: none;
+}
+
+#controlBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.counterBox {
+    display: flex;
+    background: var(--bg-panel-light);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.counterBox .tab-label {
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.counterBox .lcd-display {
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+}
+
+#instructionBar {
+    text-align: center;
+    font-size: 20px;
+    padding: 14px;
+}
+
+#towers {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tower {
+    display: flex;
+    border: none;
+    background-color: var(--bg-panel-mid);
+    padding: 20px 20px;
+    border-radius: 10px;
+    position: relative;
+    width: 300px;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+}
+
+.rod {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 6px;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 300px;
+    background: var(--accent-gold);
+}
+
+.disks {
+    position: absolute;
+    left: 0;
+    bottom: 50px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.disk {
+    display: flex;
+    border: 10px;
+    border-color: #000;
+    border-radius: 50px;
+}
+
+.tower:hover {
+    box-shadow: 0 0 10px gold;
+    transform: translateY(-10px);
+    transition: .2s;
+}
+
+.selected {
+    box-shadow: 0 0 5px gold;
+    z-index: 100;
+    transition: .2s;
+}
+
+@keyframes shakeDisk {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-14px); }
+    40%  { transform: translateX(14px); }
+    60%  { transform: translateX(-9px); }
+    80%  { transform: translateX(9px); }
+    100% { transform: translateX(0); }
+}
+
+.disk.shake {
+    animation: shakeDisk 0.4s ease;
+}
+
+#heldDiskArea1, #heldDiskArea2, #heldDiskArea3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    margin-bottom: 260px;
+}
+
+#winOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#winOverlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+#winCard {
+    background-color: #4a7a52;
+    padding: 40px 50px;
+    border-radius: 18px;
+    text-align: center;
+    color: white;
+    transform: scale(0.8);
+    transition: transform 0.3s;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+#winOverlay.show #winCard {
+    transform: scale(1);
+}
+
+#winTitle {
+    margin: 0 0 10px;
+    font-size: 42px;
+    color: #39ff14;
+    font-family: var(--font-display);
+    text-shadow: 0 0 12px #39ff14;
+}
+
+#winStatsRow {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#winRankBox {
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    align-self: stretch;
+}
+
+#winRankBox .tab-label {
+    border-radius: 0;
+    flex: 1;
+}
+
+#winRankBox .lcd-display {
+    border-radius: 0;
+    min-width: 90px;
+}
+
+#winButtons {
+    display: flex;
+    gap: 40px;
+}
+
+@media (max-width: 640px) { 
+    #game { padding: 20px; }
+    .tower { width: 30vw; min-width: 90px; height: 260px; padding: 10px; }
+    #heldDiskArea1, #heldDiskArea2, #heldDiskArea3 { width: 30vw; margin-bottom: 190px; }
+    #instructionBar { font-size: 15px; }
+    #winStatsRow { flex-direction: column; }
+    #winButtons { flex-direction: column; gap: 14px; width: 80vw; }   
+}

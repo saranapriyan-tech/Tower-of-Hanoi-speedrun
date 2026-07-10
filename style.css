@@ -1,8 +1,41 @@
+:root {
+    --bg-outer: #000000;
+    --bg-frame: #4d4d4d;
+    --bg-panel-dark: #1e1e1e;
+    --bg-panel-mid: #5f5f5f;
+    --bg-panel-light: #c9c9c9;
+
+    --accent-gold: rgb(255, 183, 0);
+    --accent-gold-dark: #cc9200;
+    --accent-blue: dodgerblue;
+    --accent-blue-dark: #0a3fa0;
+    --accent-green: #22c55e;
+    --accent-green-dark: #16803e;
+    --accent-cyan: #22e0e0;
+    --accent-cyan-dark: #159a9a;
+    --accent-red: #ff4d4d;
+
+    --lcd-bg: #180f3d;
+    --lcd-text: #39ff14;
+
+   
+    --font-lcd: 'VT323', 'Courier New', monospace;
+    --font-body: Arial, sans-serif;
+
+    --font-display: "Audiowide", sans-serif;
+    --font-weight: 400;
+    --font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-body);
     display: flex;
-    background-color: #121212;
+    background-color: var(--bg-outer);
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
@@ -21,547 +54,57 @@ span {
     color: white;
 }
 
-#board {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#game {
-    display: flex;
-    flex-direction: column;
-    border: none;
-    padding: 100px 100px;
-    border-radius: 6px;
-    background-color: #1E1E1E;
-    justify-content: center;
-    gap: 15px;
-}
-
-#towers {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-}
-
-#controls {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    gap: 15px;
-
-}
-#details {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 6px;
-    background-color: #1E1E1E;
-    padding: 20px 20px;
-    gap: 15px;
-}
-
-#dashboard {
-    display: flex;
-    border: none;
-    border-radius: 6px;
-    flex-direction: row;
-    justify-content: center;
-    align-items:center;
-    font-weight: bold;
-    color: white;
-    background-color: #1E1E1E;
-    padding: 20px 20px;
-    gap: 15px;
-}
-
-#leftdash {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#right-dash {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#topRow {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    gap: 15px;
-}
-
-#name {
-    display: flex;
-    border: none;
-    border-radius: 6px;
-    flex-direction: column;
-    font-weight: bold;
-    color: white;
-    background-color: #1E1E1E;
-    gap: 15px;
-}
-
-#stats {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#timers {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#username {
-    display: flex;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    width: 500px;
-    gap: 15px;
-    font-weight: bold;
-    color: white;
-    box-sizing: border-box;
-}
-
-#usernameGuidelines {
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 12px 20px;
-    color: white;
-    font-weight: normal;
-    font-size: 14px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#usernameGuidelines summary {
-    cursor: pointer;
-    font-weight: bold;
-    outline: none;
-    list-style: none;
-}
-
-#usernameGuidelines summary::-webkit-details-marker {
-    display: none;
-}
-
-#usernameGuidelines summary::before {
-    content: "▸ ";
-    display: inline-block;
-    transition: transform 0.2s;
-}
-
-#usernameGuidelines[open] summary::before {
-    content: "▾ ";
-}
-
-#usernameGuidelines ul {
-    margin: 10px 0 0 0;
-    padding-left: 20px;
-    line-height: 1.6;
-    font-weight: normal;
-}
-
-#leaderboard {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    border: none;
-    border-radius: 6px;
-    background-color: #1E1E1E;
-    padding: 20px 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#leaderboard h2 {
-    margin: 0;
-    color: white;
-    font-size: 20px;
-}
-
-#categoryTabs {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.catTab {
-    padding: 8px 18px;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.catTab:hover {
-    background-color: #757575;
-}
-
-.catTab.active {
-    background-color: dodgerblue;
-}
-
-#leaderboardTable {
-    width: 100%;
-    border-collapse: collapse;
-    color: white;
-    display: block;
-}
-
-#leaderboardTable thead {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-
-#leaderboardTable tbody {
-    display: block;
-    max-height: 260px;
-    overflow-y: auto;
-}
-
-#leaderboardTable tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-
-#leaderboardTable th {
-    text-align: left;
-    padding: 10px 12px;
-    background-color: #5f5f5f;
-    font-size: 14px;
-}
-
-#leaderboardTable th:first-child {
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-}
-
-#leaderboardTable th:last-child {
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
-
-#leaderboardTable td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #333;
-    font-size: 14px;
-}
-
-#leaderboardTable tbody tr:hover {
-    background-color: #2a2a2a;
-}
-
-#leaderboardTable tbody::-webkit-scrollbar {
-    width: 8px;
-}
-
-#leaderboardTable tbody::-webkit-scrollbar-thumb {
-    background-color: #5f5f5f;
-    border-radius: 4px;
-}
-
-#leaderboardTable tbody::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-#moveCounter {
-    display: flex;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    gap: 15px;
-    font-weight: bold;
-}
-
-#minimumCounter {
-    display: flex;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    gap: 15px;
-    font-weight: bold;
-}
-
-#ringCategoryCounter {
-    display: flex;
-    position: relative;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    gap: 15px;
-    font-weight: bold;
-}
-
-#timerCounter {
-    display: flex;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    gap: 15px;
-    font-weight: bold;
-}
-
-#dateTimeCounter {
-    display: flex;
-    border: none;
-    border-radius: 6px;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    gap: 15px;
-    font-weight: bold;
-}
-
-#controls {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#slider-container{
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    font-weight: bold;
-}
-
-#diskValue {
-    width: 30px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-#diskCount{
-    width:60px;
-    height:35px;
-    text-align:center;
-    border-radius:8px;
-    border:2px solid rgb(255, 255, 255);
-    font-size:18px;
-}
-
-.tower {
-    display: flex;
-    border: none;
-    background-color: #5f5f5f;
-    padding: 20px 20px;
-    border-radius: 10px;
-    position: relative;
-    width: 250px;
-    height: 350px;
-    justify-content: center;
-    align-items: center;
-}
-
-.rod {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    border-radius: 6px;
-    transform: translate(-50%, -50%);
-
-    width: 20px;
-    height: 300px;
-    background: rgb(255, 183, 0);
-}
-
-.disks {
-    position: absolute;
-    left: 0;
-    bottom: 50px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: flex-start;    
-}
-.disk {
-    display: flex;
-    background: dodgerblue;
-    border-radius: 50px;
-}
-
-.tower:hover {
-    box-shadow: 0 0 10px gold;
-    transform:translateY(-10px);
-    transition: .2s;
-}
-
-
-#base {
-    margin-top: 195px;
-    position: fixed;
-    width: 800px;
-    height: 25px;
-    background-color: rgb(255, 183, 0);
-}
-
-.selectedTower {
-    outline: 3px solid rgb(47, 255, 0);
-}
-
-.selected {
-    transform:translateY(-80px);
-    z-index:100;
-    transition: .2s;
-}
-
-#add-button {
-    display: flex;    
-    flex-direction: row;
-    gap: 15px;
-}
-
-#add {
-    padding:10px 25px;
-    border:none;
-    border-radius:8px;
-    background:green;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.2s;
-}
-
-#add:hover{
-    transform:scale(1.05);
-}
-
-#add:active{
-    transform:scale(0.95);
-}
-
-#undo {
+.btn {
     padding: 10px 25px;
     border: none;
-    border-radius: 8px;
-    background: rgb(0, 0, 183);
-    color: white;
+    border-radius: 10px;
+    font-family: var(--font-display);
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
-    transition: .2s;
-}
-
-#undo:hover{
-    transform:scale(1.05);
-}
-
-#undo:active{
-    transform:scale(0.95);
-}
-
-#heldDiskArea1{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 250px;
-    margin-bottom: 260px;
-}
-
-#heldDiskArea2{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    margin-bottom: 260px;
-}
-
-#heldDiskArea3{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    margin-bottom: 260px;
-}
-
-#winOverlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-#winOverlay.show {
-    display: flex;
-    opacity: 1;
-}
-
-#winCard {
-    background-color: #1E1E1E;
-    padding: 40px 50px;
-    border-radius: 12px;
-    text-align: center;
     color: white;
-    transform: scale(0.8);
-    transition: transform 0.3s;
-    box-shadow: 0 0 40px gold;
-}
-
-#winOverlay.show #winCard {
-    transform: scale(1);
-}
-
-#winCard h2 {
-    margin: 0 0 15px 0;
-    font-size: 32px;
-}
-
-#winStats {
-    font-size: 16px;
-    margin-bottom: 25px;
-    line-height: 1.6;
-}
-
-#closeWin {
-    padding: 10px 30px;
-    border: none;
-    border-radius: 8px;
-    background: green;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
 }
 
-#closeWin:hover {
+.btn:hover {
     transform: scale(1.05);
 }
+
+.btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-green { background: var(--accent-green); }
+.btn-blue { background: var(--accent-blue-dark); }
+.btn-cyan { background: var(--accent-cyan); color: #063; }
+
+.lcd-display {
+    background: var(--lcd-bg);
+    color: var(--lcd-text);
+    font-family: var(--font-lcd);
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 6px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.tab-label {
+    background: var(--accent-gold);
+    color: #1a1a1a;
+    font-family: var(--font-display);
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 8px 16px;
+    text-align: center;
+}
+

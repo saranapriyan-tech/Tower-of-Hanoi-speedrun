@@ -3,155 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tower of Hanoi</title>
+    <title>Tower of Hanoi — Speedrun</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="menu.css">
 </head>
-
 <body>
 
-    <h1>Tower of Hanoi</h1>
+    <div id="menuCard">
 
-    <div id="game">
+        <div id="menuHeader">
+            <h1>Tower of Hanoi</h1>
+            <p id="menuSubtitle">Speedrun</p>
+        </div>
 
-    <div id="leaderboard">
-    <h2>Leaderboard</h2>
-    <div id="categoryTabs">
-        <button class="catTab active" data-category="novice">Novice</button>
-        <button class="catTab" data-category="apprentice">Apprentice</button>
-        <button class="catTab" data-category="skilled">Skilled</button>
-        <button class="catTab" data-category="expert">Expert</button>
-        <button class="catTab" data-category="master">Master</button>
-    </div>
-    
-    <table id="leaderboardTable">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Player</th>
-                <th>Disks</th>
-                <th>Time</th>
-                <th>Moves</th>
-            </tr>
-        </thead>
-        <tbody id="leaderboardBody">
-        </tbody>
-    </table>
-    </div>
-
-
-    <div id="dashboard">
-        <div id="left-dash">
-            <div id="topRow">
-                <div id="name">
-                <label for="username">Enter you username:</label>
-                <input id="username" maxlength="20" pattern="[A-Za-z0-9 _\-]{3,20}" autocomplete="off" spellcheck="false"  ></input>
-
-                <span id="usernameGuidelines">
-                    <summary>Username Guidelines</summary>
-                    <ul>
-                        <li>name must be 3–20 characters long</li>
-                        <li>Letters, numbers, spaces, hyphens (-) and underscores (_) only allowed</li>
-                        <li>No HTML tags, scripts, or special characters (e.g. &lt; &gt; { } ; = /) allowed</li>
-                    </ul>
-                </span>
+        <div id="leaderboard">
+            <div id="leaderboardSidebar">
+                <h2>Leaderboards</h2>
+                <div id="categoryTabs">
+                    <button class="catTab active" data-category="novice">Novice</button>
+                    <button class="catTab" data-category="apprentice">Apprentice</button>
+                    <button class="catTab" data-category="skilled">Skilled</button>
+                    <button class="catTab" data-category="expert">Expert</button>
+                    <button class="catTab" data-category="master">Master</button>
                 </div>
+            </div>
+
+            <div id="leaderboardTableWrap">
+                <table id="leaderboardTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Disks</th>
+                            <th>Time</th>
+                            <th>Moves</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div id="right-dash">
-
-            <div id="ringCategoryCounter">
-                <label for="ringCategory">Ring category:</label>
-                <span id="ringCategory">--</span>
+        <div id="usernameSection">
+            <div id="usernameRow">
+                <label for="username" class="visually-hidden">Enter your username</label>
+                <input id="username" placeholder="Enter your username" maxlength="20"
+                       pattern="[A-Za-z0-9 _\-]{3,20}" autocomplete="off" spellcheck="false">
+                <button id="enterUsername" class="btn btn-blue">Enter</button>
             </div>
-            
-            <div id="controls">
-            
-                <div id="slider-container">
-                <label for="diskCount">Number of Disks:    </label>
-                <input type="range" id="diskCount" min="3" max="12" value="5">  
-                <span id="diskValue">5</span>        
-                </div>
 
-                <div id = "add-button">
-                <button id="add">Add disks / Reset</button>
-                <button id="undo">Undo</button>
-                </div>
-
+            <div id="usernameGuidelines">
+                <p id="usernameStatus">Choose a username to get started.</p>
+                <ul>
+                    <li>3–20 characters long</li>
+                    <li>Letters, numbers, spaces, hyphens (-) and underscores (_) only</li>
+                    <li>No HTML tags, scripts, or special characters (e.g. &lt; &gt; { } ; = /)</li>
+                </ul>
             </div>
         </div>
 
-    </div>
-
-    <div id="details">
-
-        <div id="timers">
-                <div id="timerCounter">
-                    <label for="timer">Timer:</label>
-                    <span id="timer">00:00:00:00</span>
-                </div>
-
-                <div id="dateTimeCounter">
-                    <label for="dateTime">Date:</label>
-                    <span id="dateTime">--</span>
-                </div>
-
+        <div id="diskRow">
+            <span class="tab-label">Select Disks</span>
+            <div id="sliderTrack">
+                <input type="range" id="diskCount" min="3" max="12" value="5">
+            </div>
+            <span id="diskValue" class="disk-value-box">5</span>
         </div>
 
-        <div id="stats">
-                <div id="moveCounter">
-                    <label for="moveCount">Number of moves:</label>
-                    <span id="moveCount">0</span>
-                </div>
-
-                <div id="minimumCounter">
-                    <label for="minimumCount">Minimum moves:</label>
-                    <span id="minimumCount">0</span>
-                </div>
-
-        </div> 
-    </div>
-
-    <div id="board">
-
-        <div id="towers">
-            
-            <div class="tower" id="tower1">
-                <div id="heldDiskArea1"></div>
-                <div class="rod"></div>
-                <div class="disks"></div>
+        <div id="categoryRow">
+            <span class="tab-label">Your category</span>
+            <div id="categoryDisplay">
+                <span id="ringCategory">Apprentice</span>
             </div>
-
-            
-            <div class="tower" id="tower2">
-                <div id="heldDiskArea2"></div>
-                <div class="rod"></div>
-                <div class="disks"></div>
-            </div>
-
-            
-            <div class="tower" id="tower3">
-                <div id="heldDiskArea3"></div>
-                <div class="rod"></div>
-                <div class="disks"></div>
-            </div>
-            
-           
-
         </div>
 
-    </div>
-    </div>
+        <button id="startGame" class="btn btn-green" disabled>Start Game</button>
 
-    <div id="winOverlay">
-        <div id="winCard">
-        <h2>🎉 You Win!</h2>
-        <p id="winStats"></p>
-        <button id="closeWin">Play Again</button>
-        </div>
     </div>
 
-    <script src="script.js"></script>
-
+    <script src="shared.js"></script>
+    <script src="menu.js"></script>
 </body>
 </html>

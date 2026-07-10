@@ -1,47 +1,31 @@
+let playerUsername = localStorage.getItem(LS_KEYS.username);
+let diskCount = Number(localStorage.getItem(LS_KEYS.diskCount));
+let playerCategory = localStorage.getItem(LS_KEYS.ringCategory);
+
+if (!playerUsername || !diskCount) {
+    window.location.href = "index.html";
+}
+
 let tower1 = document.getElementById("tower1");
 let disksContainer = tower1.querySelector(".disks");
-let add = document.getElementById("add");
-let diskCount = 0;
 let towers = [[], [], []];
-let slider = document.getElementById("diskCount");
-let value = document.getElementById("diskValue");
 let selectedTower = null;
 let heldDisk = null;
 let moveCount = 0;
-let moveHistory = []
+let moveHistory = [];
 
 let timerInterval = null;
 let timerRunning = false;
 let timerStart = 0;
 let elapsedTime = 0;
 
-const MAX_DISK_WIDTH = 250; 
-const MIN_DISK_WIDTH = 35;  
-const TOTAL_STACK_HEIGHT = 250; 
-const MAX_DISK_HEIGHT = 25 ;
-const MIN_DISK_HEIGHT = 15; 
+const MAX_DISK_WIDTH = 250;
+const MIN_DISK_WIDTH = 35;
+const TOTAL_STACK_HEIGHT = 250;
+const MAX_DISK_HEIGHT = 25;
+const MIN_DISK_HEIGHT = 15;
 
-
-slider.addEventListener("input", function () {
-    value.textContent = slider.value;
-    minimumCounter(slider.value);
-    diskCount = Number(document.getElementById("diskCount").value);
-
-    towers = [[], [], []];
-    selectedTower = null;
-    heldDisk = null;
-    moveCount = 0;
-    moveHistory = [];
-    resetTimer();
-
-    minimumCounter(diskCount);
-    ringCategory(diskCount);
-    render();
-});
-
-add.addEventListener('click', function () {
-    diskCount = Number(document.getElementById("diskCount").value);
-
+function initGame() {
     let firstTower = [];
     for (let i = diskCount; i >= 1; i--) {
         firstTower.push(i);
@@ -55,31 +39,15 @@ add.addEventListener('click', function () {
     resetTimer();
 
     minimumCounter(diskCount);
-    ringCategory(diskCount);
     render();
-});
-
-let undoBtn = document.getElementById("undo");
-undoBtn.addEventListener("click",undoMove);
-
-let usernameInput = document.getElementById("username");
-const USERNAME_ALLOWED = /[^A-Za-z0-9 _-]/g;
-const USERNAME_MAX_LENGTH = 20;
-
-function sanitizeUsername(raw) {
-    return raw.replace(USERNAME_ALLOWED, "").slice(0, USERNAME_MAX_LENGTH);
 }
 
-usernameInput.addEventListener("input", function () {
-    let clean = sanitizeUsername(this.value);
-    if (this.value !== clean) {
-        let cursor = this.selectionStart;
-        this.value = clean;
-        this.setSelectionRange(cursor, cursor);
-    }
+let undoBtn = document.getElementById("undo");
+undoBtn.addEventListener("click", undoMove);
+
+document.getElementById("restart").addEventListener("click", function () {
+    initGame();
 });
-
-
 
 function render() {
     let count = Math.max(diskCount, 5);
@@ -87,11 +55,10 @@ function render() {
     let segment = TOTAL_STACK_HEIGHT / count;
     let diskMargin = Math.max(1, segment * 0.15);
 
-    for (let A = 0; A <3; A++) {
-        document.getElementById(`heldDiskArea${A + 1}`).innerHTML = ""; 
-
+    for (let A = 0; A < 3; A++) {
+        document.getElementById(`heldDiskArea${A + 1}`).innerHTML = "";
     }
-    
+
     for (let t = 0; t < 3; t++) {
         let towerEl = document.getElementById(`tower${t + 1}`);
         let container = towerEl.querySelector(".disks");
@@ -101,10 +68,10 @@ function render() {
         for (let size of towers[t]) {
             let disk = document.createElement("div");
             disk.classList.add("disk");
-            disk.style.width = Math.max(MIN_DISK_WIDTH,(size / (count - count*0.05)) * MAX_DISK_WIDTH) + "px";
+            disk.style.width = Math.max(MIN_DISK_WIDTH, (size / (count - count * 0.05)) * MAX_DISK_WIDTH) + "px";
             disk.style.height = Math.min(MAX_DISK_HEIGHT, Math.max(MIN_DISK_HEIGHT, segment - diskMargin)) + "px";
             disk.style.marginBottom = diskMargin + "px";
-            
+            disk.style.background = getDiskColor(size, diskCount);
 
             if (size === heldDisk && t === selectedTower) {
                 disk.classList.add("selected");
@@ -112,7 +79,6 @@ function render() {
             } else {
                 container.appendChild(disk);
             }
-            
         }
     }
 
@@ -122,10 +88,15 @@ function render() {
     }
 }
 
+function getDiskColor(size, totalDisks) {
+    let hue = 40 + ((size - 1) / Math.max(1, totalDisks - 1)) * 230;
+    return `hsl(${hue}, 85%, 55%)`;
+}
+
 function startTimer() {
-    if (timerRunning) return; 
+    if (timerRunning) return;
     timerRunning = true;
-    timerStart = Date.now() - elapsedTime; 
+    timerStart = Date.now() - elapsedTime;
     timerInterval = setInterval(updateTimerDisplay, 10);
 }
 
@@ -164,9 +135,9 @@ function updateTimerDisplay() {
 function updateDateTime() {
     let dateTimeEl = document.getElementById("dateTime");
     if (!dateTimeEl) return;
- 
+
     let now = new Date();
- 
+
     let datePart = now.toLocaleDateString(undefined, {
         year: "numeric",
         month: "short",
@@ -177,28 +148,13 @@ function updateDateTime() {
         minute: "2-digit",
         second: "2-digit"
     });
- 
+
     dateTimeEl.textContent = datePart + " " + timePart;
 }
 
 function minimumCounter(diskval) {
     let minimumCountEL = document.getElementById("minimumCount");
-    let minimumCount = (2 ** diskval) -1;
-    minimumCountEL.textContent = minimumCount;
-}   
-
-function ringCategory(diskval) {
-    let ringCategoryEl = document.getElementById("ringCategory");
-    if (!ringCategoryEl) return;
-
-    let category;
-    if (diskval <= 4) category = "Novice";
-    else if (diskval <= 6) category = "Apprentice";
-    else if (diskval <= 8) category = "Skilled";
-    else if (diskval <= 10) category = "Expert";
-    else category = "Master";
-
-    ringCategoryEl.textContent = category;
+    minimumCountEL.textContent = minimumMoves(diskval);
 }
 
 function handleTowerClick(index) {
@@ -206,21 +162,30 @@ function handleTowerClick(index) {
         if (towers[index].length === 0) return;
         selectedTower = index;
         heldDisk = towers[index][towers[index].length - 1];
-        startTimer(); 
+        startTimer();
         render();
+        updateInstructionBar();
         return;
     }
     if (selectedTower === index) {
         selectedTower = null;
         heldDisk = null;
         render();
+        updateInstructionBar();
         return;
     }
-    moveDisk(selectedTower, index);
+
+    let moved = moveDisk(selectedTower, index);
+
+    if (!moved) {
+        triggerInvalidMoveShake(selectedTower);
+        return;
+    }
+
     selectedTower = null;
     heldDisk = null;
     render();
-   
+    updateInstructionBar();
     checkWin();
 }
 
@@ -233,7 +198,9 @@ function moveDisk(from, to) {
         towers[to].push(movingDisk);
         moveCount++;
         moveHistory.push({ from, to });
+        return true;
     }
+    return false; 
 }
 
 function undoMove() {
@@ -249,35 +216,85 @@ function undoMove() {
     render();
 }
 
+function triggerInvalidMoveShake(fromIndex) {
+    let heldContainer = document.getElementById(`heldDiskArea${fromIndex + 1}`);
+    let heldEl = heldContainer.querySelector(".disk");
+    if (!heldEl) return;
+
+    heldEl.classList.remove("shake");
+    void heldEl.offsetWidth; 
+    heldEl.classList.add("shake");
+
+    heldEl.addEventListener("animationend", function handler() {
+        heldEl.classList.remove("shake");
+        heldEl.removeEventListener("animationend", handler);
+    });
+}
+
+function updateInstructionBar() {
+    let bar = document.getElementById("instructionBar");
+    if (!bar) return;
+    bar.textContent = heldDisk !== null
+        ? "click the tower to drop disk"
+        : "click a tower to grab the disk";
+}
+
 function checkWin() {
     if (towers[2].length === diskCount) {
         stopTimer();
 
-        let username = usernameInput.value.trim();
         let finalTime = elapsedTime;
         let finalMoves = moveCount;
 
-        showWinOverlay(finalTime, finalMoves);
+        launchConfetti();
+        document.getElementById("game").classList.add("blurred");
 
-        if (username.length >= 3) {
-            submitScore(username, diskCount, finalTime, finalMoves);
-        } else {
-            console.log("No valid username entered, score not submitted.");
-        }
+        let rankPromise = (playerUsername.length >= 3)
+            ? submitScoreAndGetRank(playerUsername, diskCount, finalTime, finalMoves)
+            : Promise.resolve(null);
+
+        setTimeout(function () {
+            showWinOverlay(finalTime, finalMoves, null);
+            rankPromise.then(function (rank) {
+                updateWinRank(rank);
+            });
+        }, 1200);
+        
     }
 }
 
-function showWinOverlay(finalTime, finalMoves) {
+function showWinOverlay(finalTime, finalMoves, rank) {
     let overlay = document.getElementById("winOverlay");
-    let statsEl = document.getElementById("winStats");
 
-    statsEl.textContent = `Time: ${formatTime(finalTime)}  |  Moves: ${finalMoves}`;
+    document.getElementById("winTime").textContent = formatTime(finalTime);
+    document.getElementById("winMoves").textContent = finalMoves;
+    updateWinRank(rank);
+
     overlay.classList.add("show");
 }
 
-document.getElementById("closeWin").addEventListener("click", function () {
+function updateWinRank(rank) {
+    document.getElementById("winRank").textContent = (rank === null || rank === undefined) ? "--" : rank;
+}
+
+document.getElementById("playAgainBtn").addEventListener("click", function () {
     document.getElementById("winOverlay").classList.remove("show");
+    document.getElementById("game").classList.remove("blurred");
+    initGame();
 });
+
+document.getElementById("mainMenuBtn").addEventListener("click", function () {
+    window.location.href = "index.html";
+});
+
+function launchConfetti() {
+    if (typeof confetti !== "function") return;
+    confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+    setTimeout(function () {
+        confetti({ particleCount: 80, angle: 60, spread: 70, origin: { x: 0 } });
+        confetti({ particleCount: 80, angle: 120, spread: 70, origin: { x: 1 } });
+    }, 300);
+}
 
 async function submitScore(username, diskCount, timeTaken, moveCount) {
     try {
@@ -290,82 +307,39 @@ async function submitScore(username, diskCount, timeTaken, moveCount) {
         if (!response.ok) {
             const errData = await response.json();
             console.log("Score not saved:", errData.error);
-            return;
+            return false; 
         }
 
         const data = await response.json();
         console.log("Score saved:", data);
-
-        fetchLeaderboard(getActiveCategory());
+        return true; 
     } catch (err) {
         console.log("Network error saving score:", err);
+        return false;
     }
 }
 
-const BACKEND_URL = "https://tower-of-hanoi-ss9n.onrender.com";
+async function submitScoreAndGetRank(username, diskCount, timeTaken, moveCount) {
+    let saved = await submitScore(username, diskCount, timeTaken, moveCount);
+    if (!saved) return null;
+    return await fetchRank(username, timeTaken, moveCount);
+}
 
-async function fetchLeaderboard(category) {
-    let tbody = document.getElementById("leaderboardBody");
-    tbody.innerHTML = `<tr><td colspan="5">Loading...</td></tr>`;
-
+async function fetchRank(username, timeTaken, moveCount) {
     try {
+        let category = ringCategory(diskCount).toLowerCase();
         const response = await fetch(`${BACKEND_URL}/api/scores?category=${category}`);
-
-        if (!response.ok) {
-            tbody.innerHTML = `<tr><td colspan="5">Failed to load leaderboard</td></tr>`;
-            return;
-        }
+        if (!response.ok) return null;
 
         const scores = await response.json();
-        renderLeaderboard(scores);
+        let idx = scores.findIndex(s =>
+            s.username === username && s.timeTaken === timeTaken && s.moveCount === moveCount
+        );
+        return idx === -1 ? null : idx + 1;
     } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="5">Network error</td></tr>`;
-        console.log("Leaderboard fetch error:", err);
+        console.log("Rank fetch error:", err);
+        return null;
     }
-}
-
-function formatTime(ms) {
-    let totalSeconds = Math.floor(ms / 1000);
-    let minutes = Math.floor(totalSeconds / 60);
-    let seconds = totalSeconds % 60;
-    let centiseconds = Math.floor((ms % 1000) / 10);
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(centiseconds).padStart(2, "0")}`;
-}
-
-function renderLeaderboard(scores) {
-    let tbody = document.getElementById("leaderboardBody");
-    tbody.innerHTML = "";
-
-    if (scores.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5">No scores yet — be the first!</td></tr>`;
-        return;
-    }
-
-    scores.forEach((score, index) => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${score.username}</td>
-            <td>${score.diskCount}</td>
-            <td>${formatTime(score.timeTaken)}</td>
-            <td>${score.moveCount}</td>
-        `;
-        tbody.appendChild(row);
-    });
-}
-
-let catTabs = document.querySelectorAll(".catTab");
-catTabs.forEach(tab => {
-    tab.addEventListener("click", function () {
-        catTabs.forEach(t => t.classList.remove("active"));
-        this.classList.add("active");
-        fetchLeaderboard(this.dataset.category);
-    });
-});
-
-function getActiveCategory() {
-    let activeTab = document.querySelector(".catTab.active");
-    return activeTab ? activeTab.dataset.category : "novice";
 }
 
 for (let i = 0; i < 3; i++) {
@@ -374,8 +348,7 @@ for (let i = 0; i < 3; i++) {
     });
 }
 
-updateDateTime(); 
+updateDateTime();
 setInterval(updateDateTime, 1000);
-minimumCounter(Number(slider.value));
-ringCategory(Number(slider.value));
-fetchLeaderboard("novice");
+
+initGame();

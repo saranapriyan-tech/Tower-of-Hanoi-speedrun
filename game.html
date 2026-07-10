@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower of Hanoi — Speedrun</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+    <div id="game">
+
+        <div id="controlBar">
+            <div class="counterBox">
+                <span class="tab-label">Date</span>
+                <span id="dateTime" class="lcd-display">--</span>
+            </div>
+
+            <div class="counterBox">
+                <span class="tab-label">Best possible moves</span>
+                <span id="minimumCount" class="lcd-display">00</span>
+            </div>
+        </div>
+
+        <div id="controlBar">
+            <button id="undo" class="btn btn-blue">Undo</button>
+
+            <div class="counterBox">
+                <span class="tab-label">Timer</span>
+                <span id="timer" class="lcd-display">00:00:00:00</span>
+            </div>
+
+            <div class="counterBox">
+                <span class="tab-label">Number of Moves</span>
+                <span id="moveCount" class="lcd-display">00</span>
+            </div>
+
+            <button id="restart" class="btn btn-cyan">Restart</button>
+        </div>
+
+        <div id="instructionBar" class="lcd-display">Click the tower to pick up disk</div>
+
+        <div id="towers">
+
+            <div class="tower" id="tower1">
+                <div id="heldDiskArea1"></div>
+                <div class="rod"></div>
+                <div class="disks"></div>
+            </div>
+
+            <div class="tower" id="tower2">
+                <div id="heldDiskArea2"></div>
+                <div class="rod"></div>
+                <div class="disks"></div>
+            </div>
+
+            <div class="tower" id="tower3">
+                <div id="heldDiskArea3"></div>
+                <div class="rod"></div>
+                <div class="disks"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="winOverlay">
+        <div id="winCard">
+            <h2 id="winTitle">You Win !</h2>
+
+            <div id="winStatsRow">
+                <div class="counterBox">
+                    <span class="tab-label">Your time</span>
+                    <span id="winTime" class="lcd-display">00:00:00:00</span>
+                </div>
+
+                <div class="counterBox">
+                    <span class="tab-label">number of moves</span>
+                    <span id="winMoves" class="lcd-display">00</span>
+                </div>
+            </div>
+
+            <div id="winRankBox">
+                <span class="tab-label">Your Rank</span>
+                <span id="winRank" class="lcd-display">00</span>
+            </div>
+        </div>
+
+        <div id="winButtons">
+            <button id="mainMenuBtn" class="btn btn-cyan">Main Menu</button>
+            <button id="playAgainBtn" class="btn btn-green">Play Again</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <script src="shared.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
