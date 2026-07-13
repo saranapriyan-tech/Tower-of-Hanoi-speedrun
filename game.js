@@ -19,9 +19,9 @@ let timerRunning = false;
 let timerStart = 0;
 let elapsedTime = 0;
 
-const MAX_DISK_WIDTH = 250;
-const MIN_DISK_WIDTH = 35;
-const TOTAL_STACK_HEIGHT = 250;
+const MAX_DISK_WIDTH_RATIO = 0.88;
+const MIN_DISK_WIDTH_RATIO = 0.14;
+const STACK_HEIGHT_RATIO = 0.7;
 const MAX_DISK_HEIGHT = 25;
 const MIN_DISK_HEIGHT = 15;
 
@@ -52,7 +52,12 @@ document.getElementById("restart").addEventListener("click", function () {
 function render() {
     let count = Math.max(diskCount, 5);
 
-    let segment = TOTAL_STACK_HEIGHT / count;
+    let towerWidth = tower1.clientWidth;
+    let maxDiskWidth = towerWidth * MAX_DISK_WIDTH_RATIO;
+    let minDiskWidth = towerWidth * MIN_DISK_WIDTH_RATIO;
+
+    let totalStackHeight = tower1.clientHeight * STACK_HEIGHT_RATIO;
+    let segment = totalStackHeight / count;
     let diskMargin = Math.max(1, segment * 0.15);
 
     for (let A = 0; A < 3; A++) {
@@ -68,7 +73,7 @@ function render() {
         for (let size of towers[t]) {
             let disk = document.createElement("div");
             disk.classList.add("disk");
-            disk.style.width = Math.max(MIN_DISK_WIDTH, (size / (count - count * 0.05)) * MAX_DISK_WIDTH) + "px";
+            disk.style.width = Math.max(minDiskWidth, (size / (count - count * 0.05)) * maxDiskWidth) + "px";
             disk.style.height = Math.min(MAX_DISK_HEIGHT, Math.max(MIN_DISK_HEIGHT, segment - diskMargin)) + "px";
             disk.style.marginBottom = diskMargin + "px";
             disk.style.background = getDiskColor(size, diskCount);
@@ -378,6 +383,12 @@ document.addEventListener("keydown",(event) => {
             handleTowerClick(2)
             break
     }
+});
+
+let resizeTimer;
+window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(render, 150);
 });
 
 updateDateTime();

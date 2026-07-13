@@ -21,13 +21,17 @@
 
         <div id="leaderboard">
             <div id="leaderboardSidebar">
-                <h2>Leaderboards</h2>
                 <div id="categoryTabs">
-                    <button class="catTab active" data-category="novice">Novice</button>
-                    <button class="catTab" data-category="apprentice">Apprentice</button>
-                    <button class="catTab" data-category="skilled">Skilled</button>
-                    <button class="catTab" data-category="expert">Expert</button>
-                    <button class="catTab" data-category="master">Master</button>
+                    <h2>Leaderboards</h2>
+                    <input type="checkbox" id="categoryToggle" class="visually-hidden">
+                    <label for="categoryToggle" id="categoryToggleLabel" class="catTab">Categories</label>
+                    <div id="categoryTabButtons">
+                        <button class="catTab active" data-category="novice">Novice</button>
+                        <button class="catTab" data-category="apprentice">Apprentice</button>
+                        <button class="catTab" data-category="skilled">Skilled</button>
+                        <button class="catTab" data-category="expert">Expert</button>
+                        <button class="catTab" data-category="master">Master</button>
+                    </div>
                 </div>
             </div>
 
@@ -66,8 +70,9 @@
             </div>
         </div>
 
+        <span class="tab-label">Select Disks</span>
+
         <div id="diskRow">
-            <span class="tab-label">Select Disks</span>
             <div id="sliderTrack">
                 <input type="range" id="diskCount" min="3" max="12" value="5">
             </div>

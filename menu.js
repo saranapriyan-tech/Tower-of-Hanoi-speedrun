@@ -90,7 +90,7 @@ function renderLeaderboard(scores) {
     });
 }
 
-let catTabs = document.querySelectorAll(".catTab");
+let catTabs = document.querySelectorAll(".catTab[data-category]");
 catTabs.forEach(tab => {
     tab.addEventListener("click", function () {
         catTabs.forEach(t => t.classList.remove("active"));

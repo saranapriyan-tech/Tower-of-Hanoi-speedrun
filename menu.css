@@ -5,9 +5,14 @@
     clip: rect(0 0 0 0);
 }
 
+.tab-label {
+    margin: 0 24px;
+}
+
 #menuCard {
-    width: 700px;
-    max-width: 94vw;
+    width: min(95vw,700px);
+    justify-content: center;
+    max-width: 95vw;
     margin: 30px auto;
     background: var(--bg-frame);
     border-radius: 16px;
@@ -45,11 +50,13 @@
 
 #leaderboard {
     display: flex;
+    flex-direction: row;
     gap: 0;
     margin: 0 24px;
     background: var(--bg-panel-light);
     border-radius: 10px;
-    overflow: hidden;
+    overflow:scroll;
+    flex-wrap: nowrap;
     min-height: 220px;
 }
 
@@ -68,9 +75,20 @@
     font-size: 15px;
     color: #1a1a1a;
     font-family: var(--font-display);
+    align-self:baseline;
 }
 
 #categoryTabs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#categoryToggleLabel {
+    display: none;
+}
+
+#categoryTabButtons {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -126,6 +144,7 @@
     display: table;
     width: 100%;
     table-layout: fixed;
+    overflow: scroll;
 }
 
 #leaderboardTable th {
@@ -133,12 +152,18 @@
     padding: 8px 10px;
     background-color: #9c9c9c;
     font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #leaderboardTable td {
     padding: 8px 10px;
     border-bottom: 1px solid #b3b3b3;
     font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #leaderboardTable tbody tr:hover {
@@ -203,6 +228,7 @@
 #diskRow, #categoryRow {
     margin: 0 24px;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 14px;
 }
@@ -284,4 +310,7 @@
     #leaderboardSidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
     #usernameRow { flex-direction: column; }
     #diskRow, #categoryRow { flex-wrap: wrap; }
+    #categoryToggleLabel { display: block; }
+    #categoryTabButtons { display: none; }
+    #categoryToggle:checked ~ #categoryTabButtons { display: flex; }
 }
